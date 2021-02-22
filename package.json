@@ -11,5 +11,14 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^3.4.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aladdinelnozahy/fyuurUdacity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aladdinelnozahy/fyuurUdacity/issues"
+  },
+  "homepage": "https://github.com/aladdinelnozahy/fyuurUdacity#readme"
 }

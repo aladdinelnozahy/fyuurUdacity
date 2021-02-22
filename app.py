@@ -106,7 +106,7 @@ def index():
 def venues():
   # TODO: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-    venuesAreas= db.session.query(Venue.city,Venue.state).all()
+    venuesAreas= db.session.query(Venue.city,Venue.state).group_by(Venue.state,Venue.city).all()
     # venues = Venue.query.all()
     venues_list = []
 
@@ -537,14 +537,21 @@ def create_artist_submission():
 
 @app.route('/shows')
 def shows():
-  # displays list of shows at /shows
-  # TODO: replace with real venues data.
-  #       num_shows should be aggregated based on number of upcoming shows per venue.
-
-  show_query = Show.query.options(db.joinedload(Show.Venue), db.joinedload(Show.Artist)).all()
-  data = list(map(Show.detail, show_query))
-
-  return render_template('pages/shows.html', shows=data)
+    # displays list of shows at /shows
+    data = []
+    shows = Show.query.all()
+    
+    for show in shows:
+        # Can reference show.artist, show.venue
+        data.append({
+            "venue_id": show.venue.id,
+            "venue_name": show.venue.name,
+            "artist_id": show.artist.id,
+            "artist_name": show.artist.name,
+            "artist_image_link": show.artist.image_link,
+            "start_time": format_datetime(str(show.start_time))
+        })
+    return render_template('pages/shows.html', shows=data)
 
 
 @app.route('/shows/create')
